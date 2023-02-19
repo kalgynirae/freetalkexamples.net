@@ -3,57 +3,117 @@
 
 <head>
   <meta charset="utf-8">
-  <title>Free Talk Examples</title>
+  <title>Completely FREE Talk Examples on the World Wide Web! WWW.FreeTalkExamples.NET</title>
   <style>
+    html {
+      background-color: #0000ff;
+    }
+
     body {
-      background-color: beige;
+      color: white;
+      width: calc(100vw + 180px);
+    }
+
+    iframe {
+      background-color: white;
+    }
+
+    a {
+      color: #4020ff;
+    }
+
+    a:focus {
+      color: #8020ff;
+    }
+
+    .site-title {
+      background-color: #ff0000;
+      color: white;
       border: ridge 5px black;
-      margin: 20px auto;
+      margin-left: 50px;
       padding: 10px;
-      width: 800px
-    }
-
-    header {
       text-align: center;
+      text-decoration: underline;
+      width: calc(100% - 280px);
     }
 
-    header h1 {
-      font-size: 2.2em;
-      margin-bottom: 0.2em;
+    .site-title img {
+      background-color: #ee1000;
     }
 
-    header h2 {
+    .columns {
+      display: grid;
+      grid-column-gap: 20px;
+      grid-template-columns: 0.6fr 1fr 0.4fr;
+    }
+
+    .sidebar {
+      background-color: #0000d0;
+      grid-column: 1;
+      font-size: 1.1em;
+      height: 300px;
+    }
+
+    .sidebar h2 {
       font-size: 1.2em;
-      margin-top: 0;
-    }
-
-    .expired::after {
-      content: "expired!";
-      color: red;
-      font-style: italic;
-      font-variant: small-caps;
-      font-weight: bold;
-      padding-left: 0.5em;
+      text-align: center;
       text-decoration: underline;
     }
 
-    .while-supplies-last::after {
-      content: "while supplies last!";
-      color: teal;
-      font-style: italic;
-      font-variant: small-caps;
-      font-weight: bold;
-      padding-left: 0.5em;
-      text-decoration: underline;
+    .sidebar ul {
+      font-family: sans-serif;
     }
 
-    #copyright-year {
-      cursor: default;
+    .example {
+      background-color: #000040;
+      margin-top: 20px;
+      height: 500px;
+      position: relative;
+    }
+
+    .example>div {
+      display: none;
+      background-color: #100030;
+      color: #80ff40;
+      position: absolute;
+      top: 0;
+    }
+
+    .example>div:first-child {
+      display: block;
+    }
+
+    .example>div:target {
+      display: block;
     }
   </style>
 </head>
 
 <body>
+  <header>
+    <h1 class=site-title>
+      <img src=site-title.gif alt="FreeTextExamples.NET logo" height=69 width=420 />
+    </h1>
+  </header>
+  <div class=columns>
+    <nav class=sidebar>
+      <h2>We have Examples for your SOFTWARE TALK needs!</h2>
+      <ul>
+        <li><a href="#lighttpd">Lighttpd dirlist issue</a></li>
+      </ul>
+    </nav>
+    <article class=example>
+      <div>
+        <p>&lt;--- Click an example on the right!</p>
+      </div>
+      <div id="lighttpd">
+        <p>The Lighttpd web server has a built-in directory listing module, but it has some bugs.</p>
+        <p>Try to download each of the files below. What happens?</p>
+        <iframe title="Lighttpd example directory listing" src="files/lighttpd/" width=400 height=300>
+        </iframe>
+      </div>
+    </article>
+  </div>
 </body>
 
 </html>
