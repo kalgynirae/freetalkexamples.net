@@ -4,89 +4,8 @@
 <head>
   <meta charset="utf-8">
   <title>Completely FREE Talk Examples on the World Wide Web! WWW.FreeTalkExamples.NET</title>
-  <style>
-    html {
-      background-color: #0000ff;
-    }
-
-    body {
-      color: white;
-      width: calc(100vw + 180px);
-    }
-
-    iframe {
-      background-color: white;
-    }
-
-    a {
-      color: #4020ff;
-    }
-
-    a:focus {
-      color: #8020ff;
-    }
-
-    .site-title {
-      background-color: #ff0000;
-      color: white;
-      border: ridge 5px black;
-      margin-left: 50px;
-      padding: 10px;
-      text-align: center;
-      text-decoration: underline;
-      width: calc(100% - 280px);
-    }
-
-    .site-title img {
-      background-color: #ee1000;
-    }
-
-    .columns {
-      display: grid;
-      grid-column-gap: 20px;
-      grid-template-columns: 0.6fr 1fr 0.4fr;
-    }
-
-    .sidebar {
-      background-color: #0000d0;
-      grid-column: 1;
-      font-size: 1.1em;
-      height: 300px;
-    }
-
-    .sidebar h2 {
-      font-size: 1.2em;
-      text-align: center;
-      text-decoration: underline;
-    }
-
-    .sidebar ul {
-      font-family: sans-serif;
-    }
-
-    .example {
-      background-color: #000040;
-      margin-top: 20px;
-      height: 500px;
-      position: relative;
-    }
-
-    .example>div {
-      display: none;
-      background-color: #100030;
-      color: #80ff40;
-      position: absolute;
-      top: 0;
-    }
-
-    .example>div:first-child {
-      display: block;
-    }
-
-    .example>div:target {
-      display: block;
-    }
-  </style>
+  <script src="https://unpkg.com/@ruffle-rs/ruffle"></script>
+  <link rel=stylesheet href="the-2000s-called-and-asked-for-their-style-back.css" />
 </head>
 
 <body>
@@ -100,6 +19,7 @@
       <h2>We have Examples for your SOFTWARE TALK needs!</h2>
       <ul>
         <li><a href="#lighttpd">Lighttpd dirlist issue</a></li>
+        <li><a href="#digikey">DigiKey unsubsribe URL</a></li>
       </ul>
     </nav>
     <article class=example>
@@ -108,12 +28,34 @@
       </div>
       <div id="lighttpd">
         <p>The Lighttpd web server has a built-in directory listing module, but it has some bugs.</p>
-        <p>Try to download each of the files below. What happens?</p>
+        <p>Try to access each of the files below. What happens?</p>
         <iframe title="Lighttpd example directory listing" src="files/lighttpd/" width=400 height=300>
         </iframe>
+        <p><em>What's going on here?</em> Click the button to find out!</p>
+        <details>
+          <summary>Reveal</summary>
+          <p>The file <tt>bar.txt</tt> actually has a <strong>newline</strong> as the first character of its filename.
+          </p>
+          <pre>
+            $ ls -l files/lighttpd/
+            total 8
+            -rw-r--r-- 1 colin colin 4 Feb 18 17:29 ''$'\n''bar.txt'
+            -rw-r--r-- 1 colin colin 4 Feb 18 17:29 foo.txt
+          </pre>
+          <p>The escaping used by <tt>ls</tt> is hard to read, so here's the same thing using <tt>printf</tt>
+          <pre>
+            $ for name in files/lighttpd/*.txt; do printf '%q\n' "$name"; done
+            $'files/lighttpd/\nbar.txt'
+            files/lighttpd/foo.txt
+          </pre>
+          <p></p>
+        </details>
       </div>
     </article>
   </div>
+  <object data="/media/boxer.swf" width="720" height="210" type="application/x-shockwave-flash">
+    <param name="movie" value="https://lumeh.org/media/boxer.swf">
+  </object>
 </body>
 
 </html>
