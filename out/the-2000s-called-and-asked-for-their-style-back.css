@@ -176,7 +176,7 @@ p:not(:first-child) {
   margin-top: 20px;
   height: 520px;
   position: relative;
-  margin-bottom: 600px;
+  margin-bottom: 480px;
 }
 
 .example>div {

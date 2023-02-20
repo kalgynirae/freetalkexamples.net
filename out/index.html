@@ -19,17 +19,13 @@
 
     <nav class=sidebar>
       <h2>We have Examples for your SOFTWARE TALK needs!</h2>
-      <h3>Escaping</h3>
       <ul>
         <li><a href="#lighttpd">Lighttpd dirlist issue</a></li>
         <li><a href="#digikey">DigiKey unsubsribe URL</a></li>
         <li><a href="#sudoedit">sudoedit CVE</a></li>
-      </ul>
-      <h3>Uncategorized</h3>
-      <ul>
         <li><a href="#corn">unpopped corn kernels</a></li>
         <li><a href="#spider">scary spider living in mailbox</a></li>
-        <li><a href="#spider">GitHub any% in 14:53</a></li>
+        <li><a href="#github">GitHub any% in 14:53</a></li>
       </ul>
     </nav>
 
@@ -70,6 +66,8 @@ files/lighttpd/foo.txt</pre>
   "files/lighttpd/\nbar.txt",
   "files/lighttpd/foo.txt"
 ]</pre>
+          <p>Lighttpd generates a reasonable looking URL (including <tt>%0A</tt>) but fails to handle this properly
+            on the backend.</p>
         </details>
       </div>
 
