@@ -3,29 +3,42 @@
 
 <head>
   <meta charset="utf-8">
-  <title>Completely FREE Talk Examples on the World Wide Web! WWW.FreeTalkExamples.NET</title>
-  <script src="https://unpkg.com/@ruffle-rs/ruffle"></script>
+  <title>🆓 Completely FREE Talk Examples on the World Wide Web! WWW.FreeTalkExamples.NET</title>
   <link rel=stylesheet href="the-2000s-called-and-asked-for-their-style-back.css" />
 </head>
 
 <body>
+
   <header>
     <h1 class=site-title>
       <img src=site-title.gif alt="FreeTextExamples.NET logo" height=69 width=420 />
     </h1>
   </header>
+
   <div class=columns>
+
     <nav class=sidebar>
       <h2>We have Examples for your SOFTWARE TALK needs!</h2>
+      <h3>Escaping</h3>
       <ul>
         <li><a href="#lighttpd">Lighttpd dirlist issue</a></li>
         <li><a href="#digikey">DigiKey unsubsribe URL</a></li>
+        <li><a href="#sudoedit">sudoedit CVE</a></li>
+      </ul>
+      <h3>Uncategorized</h3>
+      <ul>
+        <li><a href="#corn">unpopped corn kernels</a></li>
+        <li><a href="#spider">scary spider living in mailbox</a></li>
+        <li><a href="#spider">GitHub any% in 14:53</a></li>
       </ul>
     </nav>
+
     <article class=example>
+
       <div>
         <p>&lt;--- Click an example on the right!</p>
       </div>
+
       <div id="lighttpd">
         <p>The Lighttpd web server has a built-in directory listing module, but it has some bugs.</p>
         <p>Try to access each of the files below. What happens?</p>
@@ -33,29 +46,169 @@
         </iframe>
         <p><em>What's going on here?</em> Click the button to find out!</p>
         <details>
-          <summary>Reveal</summary>
-          <p>The file <tt>bar.txt</tt> actually has a <strong>newline</strong> as the first character of its filename.
+          <summary class="button hilariously-wide">Reveal</summary>
+          <p>The <tt>bar.txt</tt> actually has a <strong>newline</strong> as the first character of its filename.
           </p>
           <pre>
-            $ ls -l files/lighttpd/
-            total 8
-            -rw-r--r-- 1 colin colin 4 Feb 18 17:29 ''$'\n''bar.txt'
-            -rw-r--r-- 1 colin colin 4 Feb 18 17:29 foo.txt
-          </pre>
-          <p>The escaping used by <tt>ls</tt> is hard to read, so here's the same thing using <tt>printf</tt>
+<b>$</b> ls -l files/lighttpd/
+total 8
+-rw-r--r-- 1 colin colin 4 Feb 18 17:29 ''$'\n''bar.txt'
+-rw-r--r-- 1 colin colin 4 Feb 18 17:29 foo.txt</pre>
+          <p>The escaping used by <tt>ls</tt> is hard to read, so here's the same thing shown using <tt>printf</tt>'s
+            <tt>%q</tt> specifier.
+          </p>
           <pre>
-            $ for name in files/lighttpd/*.txt; do printf '%q\n' "$name"; done
-            $'files/lighttpd/\nbar.txt'
-            files/lighttpd/foo.txt
-          </pre>
-          <p></p>
+<b>$</b> for name in files/lighttpd/*.txt; do
+<b>&gt;</b>   printf '%q\n' "$name"
+<b>&gt;</b> done
+$'files/lighttpd/\nbar.txt'
+files/lighttpd/foo.txt</pre>
+          <p>And here it is shown by encoding it as JSON with <tt>jq</tt>.</p>
+          <pre>
+<b>$</b> jq -n '$ARGS.positional' --args files/lighttpd/*.txt
+[
+  "files/lighttpd/\nbar.txt",
+  "files/lighttpd/foo.txt"
+]</pre>
         </details>
       </div>
+
+      <div id="digikey">
+        <p>Digi-Key sometimes sends broken unsubscribe URLs in their emails.
+          Here's a real URL I received:</p>
+        <ul>
+          <li>
+            <a href="https://www.digikey.com/classic/EmailUnsubscribe.aspx?e=colin+digikey@lumeh.org&X=&mktid=2550407&jobid=4251&lang=en&program=OCE20RT&mkt_tok=MDI4LVNYSy01MDcAAAGCQLzhGYhnRMa3ziPnxVbXU0iaDBfnoyiq4Rc3q_m5JKYy22GFrs6lvkLcH4MlsWgrysc2QeYyj6vhMvUVfJHMhV-3YgUt0r2ZaPbRYMqD" rel=external target=_blank>
+              https://www.digikey.com/classic/EmailUnsubscribe.aspx?e=colin+digikey@lumeh.org&X=...
+            </a>
+          </li>
+        </ul>
+        <p>
+          <em>What's the problem?</em> State your answer aloud, then click the button to check your answer!
+          <span id=mic>
+            <svg xmlns="http://www.w3.org/2000/svg" id=mic-icon width=24 height=24 viewBox="0 0 352 512"><!-- Font Awesome Pro 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) --><path d="M176 352c53.02 0 96-42.98 96-96V96c0-53.02-42.98-96-96-96S80 42.98 80 96v160c0 53.02 42.98 96 96 96zm160-160h-16c-8.84 0-16 7.16-16 16v48c0 74.8-64.49 134.82-140.79 127.38C96.71 376.89 48 317.11 48 250.3V208c0-8.84-7.16-16-16-16H16c-8.84 0-16 7.16-16 16v40.16c0 89.64 63.97 169.55 152 181.69V464H96c-8.84 0-16 7.16-16 16v16c0 8.84 7.16 16 16 16h160c8.84 0 16-7.16 16-16v-16c0-8.84-7.16-16-16-16h-56v-33.77C285.71 418.47 352 344.9 352 256v-48c0-8.84-7.16-16-16-16z"/></svg>
+            <svg xmlns="http://www.w3.org/2000/svg" id=check-icon width=24 height=24 viewBox="0 0 512 512"><!-- Font Awesome Pro 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) --><path d="M504 256c0 136.967-111.033 248-248 248S8 392.967 8 256 119.033 8 256 8s248 111.033 248 248zM227.314 387.314l184-184c6.248-6.248 6.248-16.379 0-22.627l-22.627-22.627c-6.248-6.249-16.379-6.249-22.628 0L216 308.118l-70.059-70.059c-6.248-6.248-16.379-6.248-22.628 0l-22.627 22.627c-6.248 6.248-6.248 16.379 0 22.627l104 104c6.249 6.249 16.379 6.249 22.628.001z"/></svg>
+          </span>
+        </p>
+        <details>
+          <summary id=give-up-button class="button hilariously-wide">I Give Up</summary>
+          <p class=incorrect><strong>Incorrect!</strong> The problem is that there's a plus sign in the email address!
+            When this URL is sent in the request, the server interprets the plus sign
+            as a <i>space</i> and thus renders the page with an invalid email address.
+        </details>
+      </div>
+
+      <div id="sudoedit">
+        <p>A security vulnerability was discovered in <tt>sudoedit</tt>, a companion program to
+          <tt>sudo</tt> that allows users to edit files using their own unprivileged editor.</p>
+        <p>The vulnerability can be exploited by setting the <tt>EDITOR</tt> environment variable
+          in a specific way, and then invoking <tt>sudoedit</tt> on a file that you have permission
+          to edit.</p>
+        <pre>
+$ EDITOR='vim -- /extra/file/to/edit' sudoedit ...</pre>
+        <p>This worked because internally <tt>sudoedit</tt> was doing something like this.</p>
+        <pre>
+# in the "policy module"
+...
+if user_is_allowed_to_edit(FILES):
+    args = determine_user_editor_args()
+    args.extend(["--", *FILES])
+return args
+...
+
+# in the frontend
+args = ...  # received from policy module
+separator_index = args.index("--")
+files_to_edit = args[separator_index+1:]
+...</pre>
+        <p>There are several aspects of this design that seem a bit questionable, but the root
+          problem is that they're putting the 
+      </div>
+
     </article>
+
   </div>
-  <object data="/media/boxer.swf" width="720" height="210" type="application/x-shockwave-flash">
-    <param name="movie" value="https://lumeh.org/media/boxer.swf">
-  </object>
+
+  <div class=boxer-container>
+    <object class=boxer data="boxer.swf" width="600" height="175" type="application/x-shockwave-flash">
+      <param name="movie" value="boxer.swf">
+    </object>
+  </div>
+
+  <footer>
+    <br/><br/>
+    <hr/>
+    <br/>
+    <h1>FAQ</h1>
+    <details>
+      <summary>
+        <strong>Who created this site? <span class=smaller>(and <i>why??</i>)</span></strong>
+      </summary>
+      <p><span id=creator-paragraph>FreeTalkExamples.NET was created by <span id=creator contenteditable
+            spellcheck=false>Colin
+            Chan!</span></span> <button id=creator-button class="button button-short">Save</button><span
+          id=creator-saved>✓ Saved forever.</span></p>
+      <p class="legal-mumbo-jumbo">FreeTalkExamples.NET ("FreeTalkExamples Dot Net") is
+        <i>not</i> a
+        registered not-for-profit organization under the authority of <a href="https://peps.python.org/pep-3117/"
+          rel=external>PEP 3117</a>. Due to circumstances beyond our control, donations received by Free Talk Examples
+        Dot
+        Net exist in a quantum superposition of tax-deductible states. While we prize ourselves on
+        the ultra-fast loading times of our website, results are not guaranteed if you are travelling at or near the
+        speed
+        of light (<b><i>c</i></b>). Use of any ad-blocking software is prohibited while viewing our website but
+        encouraged
+        while viewing the websites of our competitors. Our layers recommend refraining from eating or drinking for at
+        least <tt>timedelta(minutes=30)</tt> after the conclusion of any meal.
+    </details>
+    <br/>
+    <hr/><hr/>
+    <p>Best viewed with <img src="internet-explorer.gif" /></p>
+    <hr />
+    <br />
+    <p>Copyright 2003 Best Website Design Firm LTD</p>
+    <p>Powered by phpBB</p>
+    <p>also WordPress</p>
+  </footer>
+
+  <script src="https://unpkg.com/@ruffle-rs/ruffle"></script>
+  <script>
+    window.RufflePlayer = window.RufflePlayer || {};
+    window.RufflePlayer.config = {
+      "autoplay": "on",
+      "unmuteOverlay": "hidden",
+    };
+
+    document.querySelector("#mic").addEventListener("click", () => {
+      setTimeout(() => {
+        document.querySelector("#mic").style.opacity = 1.;
+      }, 2500);
+      setTimeout(() => {
+        document.querySelector("#mic-icon").style.display = "none";
+        document.querySelector("#check-icon").style.display = "inline-block";
+        document.querySelector("#give-up-button").innerHTML = "Check My Answer";
+      }, 6500);
+    });
+
+    document.querySelector("#creator-paragraph").addEventListener("click", () => {
+      var range = document.createRange();
+      range.selectNodeContents(document.querySelector('#creator'));
+      var sel = window.getSelection();
+      sel.removeAllRanges();
+      sel.addRange(range);
+    });
+    document.querySelector("#creator").addEventListener("input", () => {
+      document.querySelector("#creator-button").style.opacity = 1.;
+    });
+    document.querySelector("#creator-button").addEventListener("click", () => {
+      document.querySelector("#creator-button").style.display = "none";
+      document.querySelector("#creator-saved").style.display = "inline";
+      setTimeout(() => {
+        document.querySelector("#creator-saved").style.display = "none";
+      }, 2000);
+    });
+  </script>
+
 </body>
 
 </html>
