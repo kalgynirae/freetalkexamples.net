@@ -99,21 +99,22 @@ files/lighttpd/foo.txt</pre>
       </div>
 
       <div id="sudoedit">
-        <p>A security vulnerability was discovered in <tt>sudoedit</tt>, a companion program to
-          <tt>sudo</tt> that allows users to edit files using their own unprivileged editor.</p>
-        <p>The vulnerability can be exploited by setting the <tt>EDITOR</tt> environment variable
-          in a specific way, and then invoking <tt>sudoedit</tt> on a file that you have permission
-          to edit.</p>
+        <p>A vulnerability was discovered in <tt>sudoedit</tt> that allowed users to edit arbitrary files.</p>
+        <p>The exploit was achieved by setting the <tt>EDITOR</tt> environment variable
+          in a specific way.</p>
         <pre>
-$ EDITOR='vim -- /extra/file/to/edit' sudoedit ...</pre>
-        <p>This worked because internally <tt>sudoedit</tt> was doing something like this.</p>
+<b>$</b> export EDITOR='vim -- /extra/file/to/edit'
+<b>$</b> sudoedit /file/you/have/permission/to/edit</pre>
+        <p>This worked because internally <tt>sudoedit</tt> did something like this.</p>
         <pre>
 # in the "policy module"
 ...
-if user_is_allowed_to_edit(FILES):
-    args = determine_user_editor_args()
-    args.extend(["--", *FILES])
-return args
+if is_user_allowed_to_edit(FILES):
+    return [
+        *shlex.split(os.environ['EDITOR']),
+        "--",
+        *FILES,
+    ]
 ...
 
 # in the frontend
@@ -121,8 +122,22 @@ args = ...  # received from policy module
 separator_index = args.index("--")
 files_to_edit = args[separator_index+1:]
 ...</pre>
-        <p>There are several aspects of this design that seem a bit questionable, but the root
-          problem is that they're putting the 
+        <p>Several aspects of this design seem questionable, but the fundamental problem is a lack of escaping.
+          The editor args, which are <i>arbitrary user-provided data</i>, are being put into a custom data format:
+          a list of [editor args..., "--", file paths...].</p>
+        <p>Seeing the data format described like that should immediately raise some questions.</p>
+        <p>One minimal way to fix this is:</p>
+        <pre>
+if is_user_allowed_to_edit(FILES):
+    return [
+        "bash",
+        "-c",
+        f'{user_editor_command()} "$@"',
+        "--",
+        *FILES,
+    ]
+        </pre>
+        <p>This way, the user-provided data can never be confused with our data.</p>
       </div>
 
     </article>
@@ -148,18 +163,15 @@ files_to_edit = args[separator_index+1:]
             spellcheck=false>Colin
             Chan!</span></span> <button id=creator-button class="button button-short">Save</button><span
           id=creator-saved>✓ Saved forever.</span></p>
-      <p class="legal-mumbo-jumbo">FreeTalkExamples.NET ("FreeTalkExamples Dot Net") is
-        <i>not</i> a
-        registered not-for-profit organization under the authority of <a href="https://peps.python.org/pep-3117/"
-          rel=external>PEP 3117</a>. Due to circumstances beyond our control, donations received by Free Talk Examples
-        Dot
-        Net exist in a quantum superposition of tax-deductible states. While we prize ourselves on
-        the ultra-fast loading times of our website, results are not guaranteed if you are travelling at or near the
-        speed
-        of light (<b><i>c</i></b>). Use of any ad-blocking software is prohibited while viewing our website but
-        encouraged
-        while viewing the websites of our competitors. Our layers recommend refraining from eating or drinking for at
-        least <tt>timedelta(minutes=30)</tt> after the conclusion of any meal.
+      <p class="legal-mumbo-jumbo">
+        FreeTalkExamples.NET ("FreeTalkExamples Dot Net") is <i>not</i> a registered not-for-profit
+        organization under the authority of <a href="https://peps.python.org/pep-3117/" rel=external>PEP 3117</a>.
+        Due to circumstances beyond our control, donations received by Free Talk Examples Dot Net exist in a
+        quantum superposition of tax-deductible states. While we prize ourselves on the ultra-fast loading times
+        of our website, results are not guaranteed if you are travelling at or near the speed of light (<b><i>c</i></b>).
+        Use of any ad-blocking software is prohibited while viewing our website but encouraged
+        while viewing the websites of our competitors. Our lawyers recommend refraining from eating or drinking for at
+        least <tt>timedelta(minutes=30)</tt> after each use of StackOverflow.
     </details>
     <br/>
     <hr/><hr/>
