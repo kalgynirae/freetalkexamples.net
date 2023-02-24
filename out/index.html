@@ -217,7 +217,7 @@ if is_user_allowed_to_edit(FILES):
       document.querySelector("#creator-button").style.display = "none";
       document.querySelector("#creator-saved").style.display = "inline";
       setTimeout(() => {
-        document.querySelector("#creator-saved").style.display = "none";
+        document.querySelector("#creator-saved").style.opacity = 0.;
       }, 2000);
     });
   </script>
